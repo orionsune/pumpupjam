@@ -7,9 +7,11 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 import simpleaudio as sa
+from rpi_ws281x import *
+import argparse
 
 # Create a sound object
-wave_object = sa.WaveObject.from_wave_file("/home/pi/sample.wav")
+# wave_object = sa.WaveObject.from_wave_file("/home/pi/sample.wav")
 # Init the I2C interface
 i2c = busio.I2C(board.SCL, board.SDA)
 # Init an ADS1115 object
@@ -18,13 +20,15 @@ ads = ADS.ADS1115(i2c)
 channel0 = AnalogIn(ads, ADS.P0)
 # Init the neopixel matrix panel.
 pixels1 = neopixel.NeoPixel(board.D12, 256, brightness=0.5, auto_write=False)
+# defines the media player to use mpv
+player = mpv.MPV()
+# Init some variables
+pressure = 0
+playidle = True
+speed = 1
 
-# stolen demo code from using adafruit's implementation of neopixels
-from rpi_ws281x import *
-import argparse
-
-LED_COUNT = 256
-LED_PIN = 12
+LED_COUNT = 256  # how many LEDs are in the panel
+LED_PIN = 12  # which pin on the raspberry pi to use
 LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 10  # DMA channel to use for generating a signal (try 10)
 LED_BRIGHTNESS = 165  # Set to 0 for darkest and 255 for brightest
@@ -35,7 +39,7 @@ strip = Adafruit_NeoPixel(
 )
 strip.begin()
 
-# more stolen demo code for text
+# defines a framebuffer neopixel object for use with displaying text on the panel
 from adafruit_pixel_framebuf import PixelFramebuffer
 
 pixel_pin = board.D12
@@ -48,12 +52,6 @@ pixels = neopixel.NeoPixel(
     auto_write=False,
 )
 pixel_framebuf = PixelFramebuffer(pixels, 32, 8, orientation=0, rotation=0)
-# end stolen code
-
-player = mpv.MPV()
-pressure = 0
-playidle = True
-speed = 1
 
 
 # generate colors based on position for progress bar rainbow.
@@ -72,7 +70,6 @@ def wheel(pos):
 
 # generate colors for the theaterchase animation
 def wheelchase(pos):
-    """Generate rainbow colors across 0-255 positions."""
     if pos < 85:
         return Color(pos * 3, 255 - pos * 3, 0)
     elif pos < 170:
@@ -293,6 +290,8 @@ def precheck():
     pixel_framebuf.display()
 
 
+# gets the idle property from the player
+# detects if the player is idle (True) or playing a track (False)
 def getprop(playidle):
     @player.property_observer("idle-active")
     def playcheck(property_name, isplaying):
@@ -301,6 +300,7 @@ def getprop(playidle):
         playidle = isplaying
 
 
+# plays the track
 def playsong():
     player.play("/home/pi/sample.wav")
 
@@ -361,8 +361,7 @@ while True:
     if pressure > 321 and playidle == True:
         playsong()  # play song when full
     if pressure < 321 and playidle == False:
-        # run the progress bar decrease function
-        pressurecheck()
+        pressurecheck()  # run the progress bar decrease function
     # need a track slowdown function or thread
 
 
