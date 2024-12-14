@@ -51,12 +51,12 @@ pixel_framebuf = PixelFramebuffer(pixels, 32, 8, orientation=0, rotation=0)
 # end stolen code
 
 player = mpv.MPV()
-
+pressure = 0
 playidle = True
 speed = 1
 
 
-# generate colors based on position for theater chase function
+# generate colors based on position for progress bar rainbow.
 # Generates rainbow colors in tuples based on a column's position in the matrix panel
 # The tuples represent (R, G, B) with values from 0 to 255.
 def wheel(pos):
@@ -70,6 +70,7 @@ def wheel(pos):
         return (0, pos * 3, 255 - pos * 3)  # Generate a green-blue color
 
 
+# generate colors for the theaterchase animation
 def wheelchase(pos):
     """Generate rainbow colors across 0-255 positions."""
     if pos < 85:
@@ -91,6 +92,7 @@ def col(position, color1, color2, color3):
 
 
 # pressure checking for each LED column
+# fills up the strip column by column based on "pressure" readings
 def pressurecheck():
     if pressure > 10:
         color = wheel(0)
@@ -285,18 +287,8 @@ def pressurecheck():
         col(248, 0, 0, 0)
 
 
-# def playsong():
-#    if pressure > 321:
-#        play_object = wave_object.play()
-#        #wave_object.play()
-#        isplaying = play_object.is_playing()
-#        while isplaying == True:
-#            isplaying = play_object.is_playing()
-#            if isplaying == True:
-#                theaterChaseRainbow(strip)
-
-
-def precheck():  # display Pump! on the LED panel
+# display Pump! on the LED panel
+def precheck():
     pixel_framebuf.text("Pump!", 3, 0, 0x00FF00)
     pixel_framebuf.display()
 
@@ -313,10 +305,11 @@ def playsong():
     player.play("/home/pi/sample.wav")
 
 
+# make theaterchase animation whilwhenever track plays and pressure is above threshold
 def rainbowchase():
     while True:
         getprop(playidle)
-        if playidle == False:
+        if playidle == False and pressure > 321:
             theaterChaseRainbow(strip)
 
 
@@ -333,25 +326,45 @@ def theaterChaseRainbow(strip, wait_ms=50):
                 strip.setPixelColor(i + q, 0)
 
 
-# end stolen code
-
-
-# here is where I think my problem is, I expect my code to stop and wait for input before executing anything after it
-# but it does. when I run this, it keeps starting playback of my audio file over and over again but I only want it to
-# play once only if the player isn't already playing something and I think i'm running into my ability limits
-
+# starting the track animoation monitor thread
 rainbowthread = threading.Thread(target=rainbowchase)
 rainbowthread.start()
 
+
+# speedcheck function I used with my light sensor in another script
+# just here as an example for me to look at until I can figure
+# out how to slow/speed a track with pressure only while the track is playing
+# this function basically takes a reading from the sensor and if dark it slows down
+# if it's bright it speeds up
+# def speedcheck():
+#    global speed
+#    pressure = channel0.value
+#    if pressure < 9000:
+#        speed = speed - 0.1
+#        player.speed = speed
+#        time.sleep(1)
+#    if pressure > 9000:
+#        speed = speed + 0.1
+#        player.speed = speed
+#        time.sleep(1)
+
+
+# my attempt at integrating all the functions together
 while True:
     getprop(playidle)
     print(playidle)
-    pressure = int(input("Simulated Pressure [0-321]: "))
-    if pressure < 10:
+    if pressure < 10 and playidle == True:
         precheck()  # display Pump! on the LED display
-    if pressure > 10:
+    pressure = int(input("Simulated Pressure [0-321]: "))
+    if pressure > 10 and playidle == True:
         pressurecheck()  # run the pressure check function
     if pressure > 321 and playidle == True:
         playsong()  # play song when full
-    # if pressure > 321 and playidle == False:
-    #    rainbowchase()
+    if pressure < 321 and playidle == False:
+        # run the progress bar decrease function
+        pressurecheck()
+    # need a track slowdown function or thread
+
+
+# there are a few bugs to work out
+# 2. The theaterchase animation freezes after track stops playing but there is no progressbar decrease function yet
