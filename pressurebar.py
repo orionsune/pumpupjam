@@ -305,7 +305,7 @@ def playsong():
     player.play("/home/pi/sample.wav")
 
 
-# make theaterchase animation whilwhenever track plays and pressure is above threshold
+# make theaterchase animation while track plays and pressure is above threshold
 def rainbowchase():
     while True:
         getprop(playidle)
