@@ -363,7 +363,3 @@ while True:
     if pressure < 321 and playidle == False:
         pressurecheck()  # run the progress bar decrease function
     # need a track slowdown function or thread
-
-
-# there are a few bugs to work out
-# 2. The theaterchase animation freezes after track stops playing but there is no progressbar decrease function yet
