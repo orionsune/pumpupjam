@@ -58,9 +58,9 @@ pixel_framebuf = PixelFramebuffer(pixels, 32, 8, orientation=0, rotation=0)
 # Generates rainbow colors in tuples based on a column's position in the matrix panel
 # The tuples represent (R, G, B) with values from 0 to 255.
 def wheel(pos):
-    if pos < 85:
+    if pos < 85:  # hereisone
         return (pos * 3, 255 - pos * 3, 0)  # Generate a red-yellow color
-    elif pos < 170:
+    elif pos < 170:  # hereisone
         pos -= 85
         return (255 - pos * 3, 0, pos * 3)  # Generate a yellow-green color
     else:
@@ -70,9 +70,9 @@ def wheel(pos):
 
 # generate colors for the theaterchase animation
 def wheelchase(pos):
-    if pos < 85:
+    if pos < 85:  # hereisone
         return Color(pos * 3, 255 - pos * 3, 0)
-    elif pos < 170:
+    elif pos < 170:  # hereisone
         pos -= 85
         return Color(255 - pos * 3, 0, pos * 3)
     else:
@@ -91,10 +91,10 @@ def col(position, color1, color2, color3):
 # pressure checking for each LED column
 # fills up the strip column by column based on "pressure" readings
 def pressurecheck():
-    if pressure > 10:
+    if pressure >= 10:
         color = wheel(0)
         col(0, color[0], color[1], color[2])
-    elif pressure < 10:
+    elif pressure <= 10:
         col(0, 0, 0, 0)
 
     # I think this is how I can speed up or slow down based on pressure readings.
@@ -435,14 +435,14 @@ def getprop(playidle):
 
 # plays the track
 def playsong():
-    player.play("/home/pi/sample.wav")
+    player.play("/home/pi/pumpupjam.wav")
 
 
 # make theaterchase animation while track plays and pressure is above threshold
 def rainbowchase():
     while True:
         getprop(playidle)
-        if playidle == False and pressure > 321:
+        if playidle == False and pressure > 320:
             theaterChaseRainbow(strip)
 
 
