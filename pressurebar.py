@@ -97,11 +97,24 @@ def pressurecheck():
     elif pressure < 10:
         col(0, 0, 0, 0)
 
+    # I think this is how I can speed up or slow down based on pressure readings.
+    # I am using a double conditional to keep lower if statements from overriding the speed
+    # I haven't finished fixing the values, I just copy pasted below each pressure check
+    # I'm also looking at a pressurized vessel I can use for testing because
+    # I am at a point where I think I need real values from the sensor
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 20:
         color = wheel(8)
         col(8, color[0], color[1], color[2])
     elif pressure < 20:
         col(8, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 30:
         color = wheel(16)
@@ -109,11 +122,19 @@ def pressurecheck():
     elif pressure < 30:
         col(16, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 40:
         color = wheel(24)
         col(24, color[0], color[1], color[2])
     elif pressure < 40:
         col(24, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 50:
         color = wheel(32)
@@ -121,11 +142,19 @@ def pressurecheck():
     elif pressure < 50:
         col(32, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 60:
         color = wheel(40)
         col(40, color[0], color[1], color[2])
     elif pressure < 60:
         col(40, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 70:
         color = wheel(48)
@@ -133,11 +162,19 @@ def pressurecheck():
     elif pressure < 70:
         col(48, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 80:
         color = wheel(56)
         col(56, color[0], color[1], color[2])
     elif pressure < 80:
         col(56, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 90:
         color = wheel(64)
@@ -145,11 +182,19 @@ def pressurecheck():
     elif pressure < 90:
         col(64, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 100:
         color = wheel(72)
         col(72, color[0], color[1], color[2])
     elif pressure < 100:
         col(72, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 110:
         color = wheel(80)
@@ -157,11 +202,19 @@ def pressurecheck():
     elif pressure < 110:
         col(80, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 120:
         color = wheel(88)
         col(88, color[0], color[1], color[2])
     elif pressure < 120:
         col(88, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 130:
         color = wheel(96)
@@ -169,11 +222,19 @@ def pressurecheck():
     elif pressure < 130:
         col(96, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 140:
         color = wheel(104)
         col(104, color[0], color[1], color[2])
     elif pressure < 140:
         col(104, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 150:
         color = wheel(112)
@@ -181,11 +242,19 @@ def pressurecheck():
     elif pressure < 150:
         col(112, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 160:
         color = wheel(120)
         col(120, color[0], color[1], color[2])
     elif pressure < 160:
         col(120, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 170:
         color = wheel(128)
@@ -193,11 +262,19 @@ def pressurecheck():
     elif pressure < 170:
         col(128, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 180:
         color = wheel(136)
         col(136, color[0], color[1], color[2])
     elif pressure < 180:
         col(136, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 190:
         color = wheel(144)
@@ -205,11 +282,19 @@ def pressurecheck():
     elif pressure < 190:
         col(144, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 200:
         color = wheel(152)
         col(152, color[0], color[1], color[2])
     elif pressure < 200:
         col(152, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 210:
         color = wheel(160)
@@ -217,11 +302,19 @@ def pressurecheck():
     elif pressure < 210:
         col(160, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 220:
         color = wheel(168)
         col(168, color[0], color[1], color[2])
     elif pressure < 220:
         col(168, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 230:
         color = wheel(176)
@@ -229,11 +322,19 @@ def pressurecheck():
     elif pressure < 230:
         col(176, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 240:
         color = wheel(184)
         col(184, color[0], color[1], color[2])
     elif pressure < 240:
         col(184, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 250:
         color = wheel(192)
@@ -241,11 +342,19 @@ def pressurecheck():
     elif pressure < 250:
         col(192, 0, 0, 0)
 
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
+
     if pressure > 260:
         color = wheel(200)
         col(200, color[0], color[1], color[2])
     elif pressure < 260:
         col(200, 0, 0, 0)
+
+    if pressure < 10 and pressure > 0:
+        if playidle == False:
+            player.speed = 0.3
 
     if pressure > 270:
         color = wheel(208)
@@ -253,11 +362,19 @@ def pressurecheck():
     elif pressure < 270:
         col(208, 0, 0, 0)
 
+    if pressure < 270 and pressure > 260:
+        if playidle == False:
+            player.speed = 0.9
+
     if pressure > 280:
         color = wheel(216)
         col(216, color[0], color[1], color[2])
     elif pressure < 280:
         col(216, 0, 0, 0)
+
+    if pressure < 280 and pressure > 270:
+        if playidle == False:
+            player.speed = 0.9
 
     if pressure > 290:
         color = wheel(224)
@@ -265,11 +382,19 @@ def pressurecheck():
     elif pressure < 290:
         col(224, 0, 0, 0)
 
+    if pressure < 290 and pressure > 280:
+        if playidle == False:
+            player.speed = 1
+
     if pressure > 300:
         color = wheel(232)
         col(232, color[0], color[1], color[2])
     elif pressure < 300:
         col(232, 0, 0, 0)
+
+    if pressure < 300 and pressure > 290:
+        if playidle == False:
+            player.speed = 1
 
     if pressure > 310:
         color = wheel(240)
@@ -277,11 +402,19 @@ def pressurecheck():
     elif pressure < 310:
         col(240, 0, 0, 0)
 
+    if pressure < 310 and pressure > 300:
+        if playidle == False:
+            player.speed = 1
+
     if pressure > 320:
         color = wheel(248)
         col(248, color[0], color[1], color[2])
     elif pressure < 320:
         col(248, 0, 0, 0)
+
+    if pressure < 320 and pressure > 310:
+        if playidle == False:
+            player.speed = 1
 
 
 # display Pump! on the LED panel
