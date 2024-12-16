@@ -91,10 +91,10 @@ def col(position, color1, color2, color3):
 # pressure checking for each LED column
 # fills up the strip column by column based on "pressure" readings
 def pressurecheck():
-    if pressure >= 10:
+    if pressure > 10:
         color = wheel(0)
         col(0, color[0], color[1], color[2])
-    elif pressure <= 10:
+    elif pressure < 10:
         col(0, 0, 0, 0)
 
     # I think this is how I can speed up or slow down based on pressure readings.
