@@ -495,6 +495,6 @@ while True:
         pressurecheck()  # run the pressure check function
     if pressure > 320 and playidle == True:
         playsong()  # play song when full
-    if pressure < 320 and playidle == False:
+    if pressure < 400 and playidle == False:
         pressurecheck()  # run the progress bar decrease function
     # need a track slowdown function or thread
