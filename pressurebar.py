@@ -464,24 +464,6 @@ rainbowthread = threading.Thread(target=rainbowchase)
 rainbowthread.start()
 
 
-# speedcheck function I used with my light sensor in another script
-# just here as an example for me to look at until I can figure
-# out how to slow/speed a track with pressure only while the track is playing
-# this function basically takes a reading from the sensor and if dark it slows down
-# if it's bright it speeds up
-# def speedcheck():
-#    global speed
-#    pressure = channel0.value
-#    if pressure < 9000:
-#        speed = speed - 0.1
-#        player.speed = speed
-#        time.sleep(1)
-#    if pressure > 9000:
-#        speed = speed + 0.1
-#        player.speed = speed
-#        time.sleep(1)
-
-
 # my attempt at integrating all the functions together
 while True:
     getprop(playidle)
@@ -497,4 +479,3 @@ while True:
         playsong()  # play song when full
     if pressure < 400 and playidle == False:
         pressurecheck()  # run the progress bar decrease function
-    # need a track slowdown function or thread
