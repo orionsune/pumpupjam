@@ -435,7 +435,7 @@ def getprop(playidle):
 
 # plays the track
 def playsong():
-    player.play("/home/pi/pumpupjam.wav")
+    player.play("/home/pi/pumpupjam.mp3")
 
 
 # make theaterchase animation while track plays and pressure is above threshold
