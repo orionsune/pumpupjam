@@ -97,11 +97,6 @@ def pressurecheck():
     elif pressure < 10:
         col(0, 0, 0, 0)
 
-    # I think this is how I can speed up or slow down based on pressure readings.
-    # I am using a double conditional to keep lower if statements from overriding the speed
-    # I haven't finished fixing the values, I just copy pasted below each pressure check
-    # I'm also looking at a pressurized vessel I can use for testing because
-    # I am at a point where I think I need real values from the sensor
     if pressure <= 10 and pressure >= 0:
         if playidle == False:
             player.speed = 0.3
@@ -264,7 +259,7 @@ def pressurecheck():
 
     if pressure <= 170 and pressure >= 160:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.7
 
     if pressure >= 180:
         color = wheel(136)
@@ -274,7 +269,7 @@ def pressurecheck():
 
     if pressure <= 180 and pressure >= 170:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.7
 
     if pressure >= 190:
         color = wheel(144)
@@ -314,7 +309,7 @@ def pressurecheck():
 
     if pressure <= 220 and pressure >= 210:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 0.8
 
     if pressure >= 230:
         color = wheel(176)
@@ -324,7 +319,7 @@ def pressurecheck():
 
     if pressure <= 230 and pressure >= 220:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 0.8
 
     if pressure >= 240:
         color = wheel(184)
@@ -374,7 +369,7 @@ def pressurecheck():
 
     if pressure <= 280 and pressure >= 270:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 1
 
     if pressure >= 290:
         color = wheel(224)
@@ -436,6 +431,7 @@ def getprop(playidle):
 # plays the track
 def playsong():
     player.play("/home/pi/pumpupjam.mp3")
+    # player.wait_for_playback()
 
 
 # make theaterchase animation while track plays and pressure is above threshold
@@ -477,5 +473,7 @@ while True:
         pressurecheck()  # run the pressure check function
     if pressure > 320 and playidle == True:
         playsong()  # play song when full
-    if pressure < 400 and playidle == False:
+    if pressure < 320 and playidle == False:
         pressurecheck()  # run the progress bar decrease function
+    if pressure >= 320 and playidle == False:
+        player.speed = 1
