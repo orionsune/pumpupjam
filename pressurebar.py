@@ -169,7 +169,7 @@ def pressurecheck():
 
     if pressure <= 10 and pressure >= 0:
         if playidle == False:
-            player.speed = 0.6
+            player.speed = 0.5
 
     if pressure >= 90:
         color = wheel(64)
@@ -179,7 +179,7 @@ def pressurecheck():
 
     if pressure <= 90 and pressure >= 80:
         if playidle == False:
-            player.speed = 0.6
+            player.speed = 0.55
 
     if pressure >= 100:
         color = wheel(72)
@@ -189,7 +189,7 @@ def pressurecheck():
 
     if pressure <= 100 and pressure >= 90:
         if playidle == False:
-            player.speed = 0.6
+            player.speed = 0.55
 
     if pressure >= 110:
         color = wheel(80)
@@ -199,7 +199,7 @@ def pressurecheck():
 
     if pressure <= 110 and pressure >= 100:
         if playidle == False:
-            player.speed = 0.6
+            player.speed = 0.58
 
     if pressure >= 120:
         color = wheel(88)
@@ -209,7 +209,7 @@ def pressurecheck():
 
     if pressure <= 120 and pressure >= 110:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.58
 
     if pressure >= 130:
         color = wheel(96)
@@ -219,7 +219,7 @@ def pressurecheck():
 
     if pressure <= 130 and pressure >= 120:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.58
 
     if pressure >= 140:
         color = wheel(104)
@@ -229,7 +229,7 @@ def pressurecheck():
 
     if pressure <= 140 and pressure >= 130:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.61
 
     if pressure >= 150:
         color = wheel(112)
@@ -239,7 +239,7 @@ def pressurecheck():
 
     if pressure <= 150 and pressure >= 140:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.61
 
     if pressure >= 160:
         color = wheel(120)
@@ -249,7 +249,7 @@ def pressurecheck():
 
     if pressure <= 160 and pressure >= 150:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.61
 
     if pressure >= 170:
         color = wheel(128)
@@ -259,7 +259,7 @@ def pressurecheck():
 
     if pressure <= 170 and pressure >= 160:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.64
 
     if pressure >= 180:
         color = wheel(136)
@@ -269,7 +269,7 @@ def pressurecheck():
 
     if pressure <= 180 and pressure >= 170:
         if playidle == False:
-            player.speed = 0.7
+            player.speed = 0.64
 
     if pressure >= 190:
         color = wheel(144)
@@ -279,7 +279,7 @@ def pressurecheck():
 
     if pressure <= 190 and pressure >= 180:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.64
 
     if pressure >= 200:
         color = wheel(152)
@@ -289,7 +289,7 @@ def pressurecheck():
 
     if pressure <= 200 and pressure >= 190:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.67
 
     if pressure >= 210:
         color = wheel(160)
@@ -299,7 +299,7 @@ def pressurecheck():
 
     if pressure <= 210 and pressure >= 200:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.7
 
     if pressure >= 220:
         color = wheel(168)
@@ -309,7 +309,7 @@ def pressurecheck():
 
     if pressure <= 220 and pressure >= 210:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.73
 
     if pressure >= 230:
         color = wheel(176)
@@ -319,7 +319,7 @@ def pressurecheck():
 
     if pressure <= 230 and pressure >= 220:
         if playidle == False:
-            player.speed = 0.8
+            player.speed = 0.76
 
     if pressure >= 240:
         color = wheel(184)
@@ -329,7 +329,7 @@ def pressurecheck():
 
     if pressure <= 240 and pressure >= 230:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 0.79
 
     if pressure >= 250:
         color = wheel(192)
@@ -339,7 +339,7 @@ def pressurecheck():
 
     if pressure <= 250 and pressure >= 240:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 0.82
 
     if pressure >= 260:
         color = wheel(200)
@@ -349,7 +349,7 @@ def pressurecheck():
 
     if pressure <= 260 and pressure >= 250:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 0.85
 
     if pressure >= 270:
         color = wheel(208)
@@ -359,7 +359,7 @@ def pressurecheck():
 
     if pressure <= 270 and pressure >= 260:
         if playidle == False:
-            player.speed = 0.9
+            player.speed = 0.88
 
     if pressure >= 280:
         color = wheel(216)
@@ -369,7 +369,7 @@ def pressurecheck():
 
     if pressure <= 280 and pressure >= 270:
         if playidle == False:
-            player.speed = 1
+            player.speed = 0.91
 
     if pressure >= 290:
         color = wheel(224)
@@ -379,7 +379,7 @@ def pressurecheck():
 
     if pressure <= 290 and pressure >= 280:
         if playidle == False:
-            player.speed = 1
+            player.speed = 0.94
 
     if pressure >= 300:
         color = wheel(232)
@@ -389,7 +389,7 @@ def pressurecheck():
 
     if pressure <= 300 and pressure >= 290:
         if playidle == False:
-            player.speed = 1
+            player.speed = 0.97
 
     if pressure >= 310:
         color = wheel(240)
