@@ -430,7 +430,7 @@ def getprop(playidle):
 
 # plays the track
 def playsong():
-    player.play("/home/pi/pumpupjam.mp3")
+    player.play("/home/pi/pumpupjamshort.mp3")
     # player.wait_for_playback()
 
 
@@ -467,13 +467,14 @@ while True:
     pressure = int(input("Simulated Pressure [0-321]: "))
     if pressure < 10 and playidle == False:
         player.stop()
+        player.speed = 1  # reset speed to 1 for next play
     if pressure < 10 and playidle == True:
         precheck()  # display Pump! on the LED display
     if pressure > 10 and playidle == True:
         pressurecheck()  # run the pressure check function
     if pressure > 320 and playidle == True:
         playsong()  # play song when full
-    if pressure < 320 and playidle == False:
+    if pressure <= 320 and playidle == False:
         pressurecheck()  # run the progress bar decrease function
     if pressure >= 320 and playidle == False:
         player.speed = 1
