@@ -9,6 +9,16 @@ from adafruit_ads1x15.analog_in import AnalogIn
 import simpleaudio as sa
 from rpi_ws281x import *
 import argparse
+import RPi.GPIO as GPIO
+import time
+import adafruit_hcsr04
+
+# TRIG_PIN = 11  # Raspberry Pi GPIO pin connected to TRIG pin of ultrasonic sensor
+# ECHO_PIN = 12  # Raspberry Pi GPIO pin connected to ECHO pin of ultrasonic sensor
+# sonar = adafruit_hcsr 4.HCSR04(trigger_pin=board.D11, echo_pin=board.D12)  # Adjust pins
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(TRIG_PIN, GPIO.OUT)
+# GPIO.setup(ECHO_PIN, GPIO.IN)
 
 # Create a sound object
 # wave_object = sa.WaveObject.from_wave_file("/home/pi/sample.wav")
@@ -16,10 +26,12 @@ import argparse
 i2c = busio.I2C(board.SCL, board.SDA)
 # Init an ADS1115 object
 ads = ADS.ADS1115(i2c)
+ads.gain = 0.6666666666666666
+# ads.gain = 1
 # Init the analog sensor input channel
 channel0 = AnalogIn(ads, ADS.P0)
 # Init the neopixel matrix panel.
-pixels1 = neopixel.NeoPixel(board.D12, 256, brightness=0.5, auto_write=False)
+pixels1 = neopixel.NeoPixel(board.D18, 256, brightness=0.4, auto_write=False)
 # defines the media player to use mpv
 player = mpv.MPV()
 # Init some variables
@@ -28,11 +40,11 @@ playidle = True
 speed = 1
 
 LED_COUNT = 256  # how many LEDs are in the panel
-LED_PIN = 12  # which pin on the raspberry pi to use
+LED_PIN = 18  # which pin on the raspberry pi to use
 LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 10  # DMA channel to use for generating a signal (try 10)
-LED_BRIGHTNESS = 165  # Set to 0 for darkest and 255 for brightest
-LED_INVERT = True  # True to invert the signal (when using NPN transistor level shift)
+LED_BRIGHTNESS = 100  # Set to 0 for darkest and 255 for brightest
+LED_INVERT = False  # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL = 0  # set to '1' for GPIOs 13, 19, 41, 45 or 53
 strip = Adafruit_NeoPixel(
     LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL
@@ -42,13 +54,13 @@ strip.begin()
 # defines a framebuffer neopixel object for use with displaying text on the panel
 from adafruit_pixel_framebuf import PixelFramebuffer
 
-pixel_pin = board.D12
+pixel_pin = board.D18
 pixel_width = 32
 pixel_height = 8
 pixels = neopixel.NeoPixel(
     pixel_pin,
     pixel_width * pixel_height,
-    brightness=0.5,
+    brightness=0.4,
     auto_write=False,
 )
 pixel_framebuf = PixelFramebuffer(pixels, 32, 8, orientation=0, rotation=0)
@@ -91,15 +103,14 @@ def col(position, color1, color2, color3):
 # pressure checking for each LED column
 # fills up the strip column by column based on "pressure" readings
 def pressurecheck():
-    if pressure >= 5000:
+    if pressure >= 4000:
         color = wheel(0)
         col(0, color[0], color[1], color[2])
-    elif pressure < 5000:
+    elif pressure < 4000:
         col(0, 0, 0, 0)
 
-    if pressure <= 5000 and pressure >= 0:
-        if playidle == False:
-            player.speed = 0.3
+    if pressure <= 4000 and pressure >= 0:
+        player.speed = 0.3
 
     if pressure >= 6000:
         color = wheel(8)
@@ -108,8 +119,7 @@ def pressurecheck():
         col(8, 0, 0, 0)
 
     if pressure <= 6000 and pressure >= 5000:
-        if playidle == False:
-            player.speed = 0.4
+        player.speed = 0.4
 
     if pressure >= 7000:
         color = wheel(16)
@@ -118,8 +128,7 @@ def pressurecheck():
         col(16, 0, 0, 0)
 
     if pressure <= 7000 and pressure >= 6000:
-        if playidle == False:
-            player.speed = 0.4
+        player.speed = 0.4
 
     if pressure >= 8000:
         color = wheel(24)
@@ -128,8 +137,7 @@ def pressurecheck():
         col(24, 0, 0, 0)
 
     if pressure <= 8000 and pressure >= 7000:
-        if playidle == False:
-            player.speed = 0.5
+        player.speed = 0.5
 
     if pressure >= 9000:
         color = wheel(32)
@@ -138,8 +146,7 @@ def pressurecheck():
         col(32, 0, 0, 0)
 
     if pressure <= 9000 and pressure >= 8000:
-        if playidle == False:
-            player.speed = 0.5
+        player.speed = 0.5
 
     if pressure >= 10000:
         color = wheel(40)
@@ -148,8 +155,7 @@ def pressurecheck():
         col(40, 0, 0, 0)
 
     if pressure <= 10000 and pressure >= 9000:
-        if playidle == False:
-            player.speed = 0.5
+        player.speed = 0.5
 
     if pressure >= 11000:
         color = wheel(48)
@@ -158,8 +164,7 @@ def pressurecheck():
         col(48, 0, 0, 0)
 
     if pressure <= 11000 and pressure >= 10000:
-        if playidle == False:
-            player.speed = 0.5
+        player.speed = 0.5
 
     if pressure >= 12000:
         color = wheel(56)
@@ -168,8 +173,7 @@ def pressurecheck():
         col(56, 0, 0, 0)
 
     if pressure <= 12000 and pressure >= 11000:
-        if playidle == False:
-            player.speed = 0.5
+        player.speed = 0.5
 
     if pressure >= 13000:
         color = wheel(64)
@@ -178,8 +182,7 @@ def pressurecheck():
         col(64, 0, 0, 0)
 
     if pressure <= 13000 and pressure >= 12000:
-        if playidle == False:
-            player.speed = 0.55
+        player.speed = 0.55
 
     if pressure >= 14000:
         color = wheel(72)
@@ -188,8 +191,7 @@ def pressurecheck():
         col(72, 0, 0, 0)
 
     if pressure <= 14000 and pressure >= 13000:
-        if playidle == False:
-            player.speed = 0.55
+        player.speed = 0.55
 
     if pressure >= 15000:
         color = wheel(80)
@@ -198,8 +200,7 @@ def pressurecheck():
         col(80, 0, 0, 0)
 
     if pressure <= 15000 and pressure >= 14000:
-        if playidle == False:
-            player.speed = 0.58
+        player.speed = 0.58
 
     if pressure >= 16000:
         color = wheel(88)
@@ -208,8 +209,7 @@ def pressurecheck():
         col(88, 0, 0, 0)
 
     if pressure <= 16000 and pressure >= 15000:
-        if playidle == False:
-            player.speed = 0.58
+        player.speed = 0.58
 
     if pressure >= 17000:
         color = wheel(96)
@@ -218,8 +218,7 @@ def pressurecheck():
         col(96, 0, 0, 0)
 
     if pressure <= 130 and pressure >= 120:
-        if playidle == False:
-            player.speed = 0.58
+        player.speed = 0.58
 
     if pressure >= 17500:
         color = wheel(104)
@@ -228,8 +227,7 @@ def pressurecheck():
         col(104, 0, 0, 0)
 
     if pressure <= 17500 and pressure >= 17000:
-        if playidle == False:
-            player.speed = 0.61
+        player.speed = 0.61
 
     if pressure >= 18000:
         color = wheel(112)
@@ -238,8 +236,7 @@ def pressurecheck():
         col(112, 0, 0, 0)
 
     if pressure <= 18000 and pressure >= 17500:
-        if playidle == False:
-            player.speed = 0.61
+        player.speed = 0.61
 
     if pressure >= 18500:
         color = wheel(120)
@@ -248,8 +245,7 @@ def pressurecheck():
         col(120, 0, 0, 0)
 
     if pressure <= 18500 and pressure >= 18000:
-        if playidle == False:
-            player.speed = 0.61
+        player.speed = 0.61
 
     if pressure >= 19000:
         color = wheel(128)
@@ -258,8 +254,7 @@ def pressurecheck():
         col(128, 0, 0, 0)
 
     if pressure <= 19000 and pressure >= 18500:
-        if playidle == False:
-            player.speed = 0.64
+        player.speed = 0.64
 
     if pressure >= 19500:
         color = wheel(136)
@@ -268,8 +263,7 @@ def pressurecheck():
         col(136, 0, 0, 0)
 
     if pressure <= 19500 and pressure >= 19000:
-        if playidle == False:
-            player.speed = 0.64
+        player.speed = 0.64
 
     if pressure >= 20000:
         color = wheel(144)
@@ -278,8 +272,7 @@ def pressurecheck():
         col(144, 0, 0, 0)
 
     if pressure <= 20000 and pressure >= 19500:
-        if playidle == False:
-            player.speed = 0.64
+        player.speed = 0.64
 
     if pressure >= 20500:
         color = wheel(152)
@@ -288,8 +281,7 @@ def pressurecheck():
         col(152, 0, 0, 0)
 
     if pressure <= 20500 and pressure >= 20000:
-        if playidle == False:
-            player.speed = 0.67
+        player.speed = 0.67
 
     if pressure >= 21000:
         color = wheel(160)
@@ -298,8 +290,7 @@ def pressurecheck():
         col(160, 0, 0, 0)
 
     if pressure <= 21000 and pressure >= 20500:
-        if playidle == False:
-            player.speed = 0.7
+        player.speed = 0.7
 
     if pressure >= 21500:
         color = wheel(168)
@@ -308,8 +299,7 @@ def pressurecheck():
         col(168, 0, 0, 0)
 
     if pressure <= 21500 and pressure >= 21000:
-        if playidle == False:
-            player.speed = 0.73
+        player.speed = 0.73
 
     if pressure >= 22000:
         color = wheel(176)
@@ -318,8 +308,7 @@ def pressurecheck():
         col(176, 0, 0, 0)
 
     if pressure <= 22000 and pressure >= 21500:
-        if playidle == False:
-            player.speed = 0.76
+        player.speed = 0.76
 
     if pressure >= 22500:
         color = wheel(184)
@@ -328,8 +317,7 @@ def pressurecheck():
         col(184, 0, 0, 0)
 
     if pressure <= 22500 and pressure >= 22000:
-        if playidle == False:
-            player.speed = 0.79
+        player.speed = 0.79
 
     if pressure >= 23000:
         color = wheel(192)
@@ -338,8 +326,7 @@ def pressurecheck():
         col(192, 0, 0, 0)
 
     if pressure <= 23000 and pressure >= 22500:
-        if playidle == False:
-            player.speed = 0.82
+        player.speed = 0.82
 
     if pressure >= 23500:
         color = wheel(200)
@@ -348,8 +335,7 @@ def pressurecheck():
         col(200, 0, 0, 0)
 
     if pressure <= 23500 and pressure >= 2300:
-        if playidle == False:
-            player.speed = 0.85
+        player.speed = 0.85
 
     if pressure >= 24000:
         color = wheel(208)
@@ -358,8 +344,7 @@ def pressurecheck():
         col(208, 0, 0, 0)
 
     if pressure <= 24000 and pressure >= 23500:
-        if playidle == False:
-            player.speed = 0.88
+        player.speed = 0.88
 
     if pressure >= 24500:
         color = wheel(216)
@@ -368,8 +353,7 @@ def pressurecheck():
         col(216, 0, 0, 0)
 
     if pressure <= 24500 and pressure >= 24000:
-        if playidle == False:
-            player.speed = 0.91
+        player.speed = 0.91
 
     if pressure >= 25000:
         color = wheel(224)
@@ -378,8 +362,7 @@ def pressurecheck():
         col(224, 0, 0, 0)
 
     if pressure <= 25000 and pressure >= 24500:
-        if playidle == False:
-            player.speed = 0.94
+        player.speed = 0.94
 
     if pressure >= 25500:
         color = wheel(232)
@@ -388,8 +371,7 @@ def pressurecheck():
         col(232, 0, 0, 0)
 
     if pressure <= 25500 and pressure >= 25000:
-        if playidle == False:
-            player.speed = 0.97
+        player.speed = 0.97
 
     if pressure >= 25750:
         color = wheel(240)
@@ -398,8 +380,7 @@ def pressurecheck():
         col(240, 0, 0, 0)
 
     if pressure <= 25750 and pressure >= 25500:
-        if playidle == False:
-            player.speed = 1
+        player.speed = 1
 
     if pressure >= 26000:
         color = wheel(248)
@@ -408,8 +389,7 @@ def pressurecheck():
         col(248, 0, 0, 0)
 
     if pressure >= 26000:
-        if playidle == False:
-            player.speed = 1
+        player.speed = 1
 
 
 # display Pump! on the LED panel
@@ -460,23 +440,50 @@ rainbowthread = threading.Thread(target=rainbowchase)
 rainbowthread.start()
 
 
+def get_pressure():
+    filter_array = []
+    num_samples = 15
+
+    # Taking multiple measurements and store in an array
+    for _ in range(num_samples):
+        filter_array.append(channel0.value)
+        # time.sleep(0.03)  # To avoid ultrasonic interference (30 milliseconds delay)
+
+    # Sorting the array in ascending order
+    filter_array.sort()
+
+    # Filtering noise
+    # Discard the five smallest and five largest samples
+    filtered_samples = filter_array[5:-5]
+
+    # Calculate the average of the remaining samples
+    pressure = sum(filtered_samples) / len(filtered_samples)
+
+    return pressure
+
+
 # my attempt at integrating all the functions together
 while True:
-    getprop(playidle)
-    print(playidle)
-    pressure = channel0.value
-    print(pressure)
-    # pressure = int(input("Simulated Pressure [0-321]: "))
-    if pressure < 4999 and playidle == False:
-        player.stop()
-        player.speed = 1  # reset speed to 1 for next play
-    if pressure < 4999 and playidle == True:
-        precheck()  # display Pump! on the LED display
-    if pressure > 4999 and playidle == True:
-        pressurecheck()  # run the pressure check function
-    if pressure > 26000 and playidle == True:
-        playsong()  # play song when full
-    if pressure <= 26000 and playidle == False:
-        pressurecheck()  # run the progress bar decrease function
-    if pressure >= 26000 and playidle == False:
-        player.speed = 1
+    try:
+        getprop(playidle)
+        # pressure = channel0.value
+        pressure = get_pressure()
+        # print("Idle:", playidle)
+        # print("PSI bits:", pressure)
+        # pressure = int(input("Simulated Pressure [0-321]: "))
+        if pressure < 4999 and playidle == False:
+            player.stop()
+            # player.terminate()
+            player.speed = 1  # reset speed to 1 for next play
+        if pressure < 4999 and playidle == True:
+            precheck()  # display Pump! on the LED display
+        if pressure > 4999 and playidle == True:
+            pressurecheck()  # run the pressure check function
+        if pressure > 26000 and playidle == True:
+            playsong()  # play song when full
+        if pressure <= 26000 and playidle == False:
+            pressurecheck()  # run the progress bar decrease function
+        if pressure >= 26000 and playidle == False:
+            player.speed = 1
+    except RuntimeError:
+        print("Retrying")
