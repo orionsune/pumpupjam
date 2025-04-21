@@ -121,7 +121,7 @@ def pressurecheck():
         col(8, 0, 0, 0)
 
     if pressure <= 9344 and pressure >= 9200:
-        player.speed = 0.4
+        player.speed = 0.35
 
     if pressure >= 9688:  # column 3
         color = wheel(16)
@@ -130,7 +130,7 @@ def pressurecheck():
         col(16, 0, 0, 0)
 
     if pressure <= 9688 and pressure >= 9344:
-        player.speed = 0.4
+        player.speed = 0.35
 
     if pressure >= 10032:  # column 4
         color = wheel(24)
@@ -139,7 +139,7 @@ def pressurecheck():
         col(24, 0, 0, 0)
 
     if pressure <= 10032 and pressure >= 9688:
-        player.speed = 0.5
+        player.speed = 0.4
 
     if pressure >= 10376:  # column 5
         color = wheel(32)
@@ -148,7 +148,7 @@ def pressurecheck():
         col(32, 0, 0, 0)
 
     if pressure <= 10376 and pressure >= 10032:
-        player.speed = 0.5
+        player.speed = 0.45
 
     if pressure >= 10720:  # column 6
         color = wheel(40)
@@ -157,7 +157,7 @@ def pressurecheck():
         col(40, 0, 0, 0)
 
     if pressure <= 10720 and pressure >= 10376:
-        player.speed = 0.5
+        player.speed = 0.45
 
     if pressure >= 11064:  # column 7
         color = wheel(48)
@@ -229,7 +229,7 @@ def pressurecheck():
         col(104, 0, 0, 0)
 
     if pressure <= 13472 and pressure >= 13128:
-        player.speed = 0.61
+        player.speed = 0.58
 
     if pressure >= 13816:  # column 15
         color = wheel(112)
@@ -238,7 +238,7 @@ def pressurecheck():
         col(112, 0, 0, 0)
 
     if pressure <= 13816 and pressure >= 13472:
-        player.speed = 0.61
+        player.speed = 0.58
 
     if pressure >= 14160:  # column 16
         color = wheel(120)
@@ -396,7 +396,7 @@ def pressurecheck():
 
 # display Pump! on the LED panel
 def precheck():
-    pixel_framebuf.text("Pump!", 3, 0, 0xCC00FF)
+    pixel_framebuf.text("Pump!", 3, 0, 0xFF030F)
     pixel_framebuf.display()
 
 
@@ -437,7 +437,7 @@ def theaterChaseRainbow(strip, wait_ms=50):
                 strip.setPixelColor(i + q, 0)
 
 
-# starting the track animation monitor thread
+# starting the track animoation monitor thread
 rainbowthread = threading.Thread(target=rainbowchase)
 rainbowthread.start()
 
@@ -469,7 +469,7 @@ while True:
     try:
         getprop(playidle)
         # pressure = channel0.value
-        pressure = get_pressure() - 1100
+        pressure = get_pressure() - 500
         # print("Idle:", playidle)
         # print(pressure)
         # pressure = int(input("Simulated Pressure [0-321]: "))
